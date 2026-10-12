@@ -2,9 +2,13 @@ services:
   api:
     build: .
     ports: ["127.0.0.1:8000:8000"]
-    volumes: ["./models:/app/models:ro"]
+    volumes:
+      - ./models:/app/models:ro
+      - ./data/gold:/app/data/gold:ro
     environment:
       MODEL_PATH: /app/models/risk_model.joblib
+      GOLD_SUPPLIERS_PATH: /app/data/gold/supplier_risk.parquet
+      PIPELINE_METRICS_PATH: /app/data/gold/pipeline_metrics.json
   dashboard:
     build: .
     command: ["streamlit", "run", "frontend/app.py", "--server.address", "0.0.0.0", "--server.port", "8501"]
