@@ -81,3 +81,15 @@ Docker ports bind to localhost; the model artifact remains a host-side file moun
 Add real licensed transportation/shipment datasets, incremental Spark/Delta Lake processing, drift monitoring, orchestration and secure cloud deployment. Real-world validation should include data temporal integrity, leakage checks, well-defined prediction horizons, monitored label availability and operational review.
 
 **Security:** The prototype API has no authentication. Never expose it publicly without authorization, rate limits, secret handling and monitoring. No cloud services have been provisioned.
+
+## Full-stack dashboard enhancements (October 2026)
+
+The dashboard now reads the Gold supplier analytics and ETL run metrics through FastAPI, including within Docker Compose. Added API endpoints:
+
+- `GET /api/suppliers`: supplier-level disruption rates from Gold Parquet
+- `GET /api/pipeline/metrics`: raw, clean, rejected and supplier counts
+- `POST /api/forecast`: research-only shipment risk probability
+
+The container API mounts `data/gold/` read-only. Generate pipeline data and train the model **before** launching `docker compose up --build`. The frontend no longer needs direct access to local Gold Parquet files.
+
+This repository uses original **CC0 synthetic open data**, not an external dataset of actual disruptions. It is sufficient for demonstrating ETL, API, forecasting and container integration but not for claiming real-world forecast accuracy. Continuous ingestion, probabilistic time-series forecasting, cloud deployment and production monitoring remain future work.
